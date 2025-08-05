@@ -1,16 +1,19 @@
-# CarbonEase SpringBoot Authentication Service - Complete Documentation
+# SpringBoot Authentication Service - Complete Documentation
 
 ## 🚀 Overview
+
 A comprehensive JWT-based authentication service built with Spring Boot, featuring role-based access control and secure user management.
 
 ## 📋 Quick Setup
 
 ### Prerequisites
+
 - Java 17+
 - Maven 3.6+
 - MySQL 8.0+
 
 ### Database Setup
+
 ```sql
 CREATE DATABASE authservice;
 USE authservice;
@@ -20,7 +23,9 @@ USE authservice;
 ```
 
 ### Application Configuration
+
 Configure `src/main/resources/application.properties`:
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/authservice
 spring.datasource.username=your_username
@@ -31,9 +36,11 @@ jwt.expiration=86400000
 ```
 
 ### Running the Application
+
 ```bash
 mvn spring-boot:run
 ```
+
 Application starts on: `http://localhost:8080`
 
 ## 🔐 API Endpoints
@@ -41,6 +48,7 @@ Application starts on: `http://localhost:8080`
 ### Authentication Endpoints
 
 #### 1. User Registration (Default: USER Role)
+
 ```
 POST /api/auth/register
 Content-Type: application/json
@@ -58,6 +66,7 @@ Response: {
 ```
 
 #### 2. Admin Registration (ADMIN Role)
+
 ```
 POST /api/auth/register-admin
 Content-Type: application/json
@@ -75,6 +84,7 @@ Response: {
 ```
 
 #### 3. User Login
+
 ```
 POST /api/auth/login
 Content-Type: application/json
@@ -92,6 +102,7 @@ Response: {
 ### Test Endpoints
 
 #### 4. Public Access (No Authentication)
+
 ```
 GET /api/test/public
 
@@ -99,6 +110,7 @@ Response: "This is a public endpoint - no authentication required!"
 ```
 
 #### 5. User Protected Endpoint
+
 ```
 GET /api/test/user
 Authorization: Bearer <JWT_TOKEN>
@@ -107,6 +119,7 @@ Response: "Welcome USER or ADMIN! This is a protected USER endpoint."
 ```
 
 #### 6. Admin Protected Endpoint
+
 ```
 GET /api/test/admin
 Authorization: Bearer <JWT_TOKEN>
@@ -117,6 +130,7 @@ Response: "Welcome ADMIN! This is a protected ADMIN endpoint."
 ## 🛡️ Security Implementation
 
 ### Role-Based Access Control
+
 - **Default Role**: All users registered via `/api/auth/register` get USER role
 - **Admin Creation**: Only possible via `/api/auth/register-admin` endpoint
 - **Access Control**:
@@ -125,12 +139,14 @@ Response: "Welcome ADMIN! This is a protected ADMIN endpoint."
   - Admin endpoints: ADMIN role required only
 
 ### JWT Security
+
 - **Token Expiration**: 24 hours (configurable)
 - **Algorithm**: HS256
 - **Secret Key**: Configurable via application.properties
 - **Stateless**: No server-side sessions
 
 ### Password Security
+
 - **Encryption**: BCrypt with strength 12
 - **Validation**: Handled by Spring Security
 
@@ -183,6 +199,7 @@ authservice/
 ## 🧪 Testing
 
 Use the provided test script to verify all functionality:
+
 ```bash
 cd documentation
 ./test-all-endpoints.cmd    # Windows
@@ -221,18 +238,20 @@ curl -X GET http://localhost:8080/api/test/admin \
 ## 🚨 Production Considerations
 
 ### Security Recommendations
+
 1. **Remove/Secure Admin Endpoint**: The `/api/auth/register-admin` endpoint should be:
+
    - Removed in production, OR
    - Protected with super-admin authentication, OR
    - Moved to admin panel with proper authorization
-
 2. **Environment Variables**:
+
    ```properties
    jwt.secret=${JWT_SECRET:your-production-secret-256-bit}
    spring.datasource.password=${DB_PASSWORD}
    ```
-
 3. **Additional Security**:
+
    - Implement rate limiting on auth endpoints
    - Add comprehensive input validation
    - Set up audit logging
@@ -240,6 +259,7 @@ curl -X GET http://localhost:8080/api/test/admin \
    - Add security headers
 
 ### Performance Optimizations
+
 - Configure connection pooling
 - Set up caching for user details
 - Optimize database queries
@@ -259,6 +279,7 @@ curl -X GET http://localhost:8080/api/test/admin \
 - ✅ **Comprehensive testing** - All endpoints verified
 
 ### Core Features Working
+
 - User registration with default USER role
 - Admin registration via dedicated endpoint
 - JWT token generation and validation
@@ -271,12 +292,14 @@ curl -X GET http://localhost:8080/api/test/admin \
 ## 🔧 Troubleshooting
 
 ### Common Issues
+
 1. **Database Connection**: Ensure MySQL is running and credentials are correct
 2. **JWT Signature Error**: Restart application if tokens become invalid
 3. **Role Access Denied**: Verify token has correct role for endpoint
 4. **Port Already in Use**: Change port in application.properties: `server.port=8081`
 
 ### Development Tips
+
 - Use Postman or curl for API testing
 - Check application logs for detailed error messages
 - Verify database tables are created correctly
