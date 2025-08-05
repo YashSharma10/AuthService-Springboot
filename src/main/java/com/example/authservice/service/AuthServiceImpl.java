@@ -65,4 +65,27 @@ public class AuthServiceImpl implements AuthService {
 
         return new AuthResponse(token, user.getRole().getName().name());
     }
+
+    @Override
+    public AuthResponse registerAdmin(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new UserAlreadyExistsException("Email already in use");
+        }
+
+        Role adminRole = roleRepository.findByName(RoleEnum.ADMIN)
+                .orElseThrow(() -> new RuntimeException("ADMIN role not found"));
+
+        User user = new User(
+                request.getName(),
+                request.getEmail(),
+                passwordEncoder.encode(request.getPassword()),
+                adminRole
+        );
+
+        userRepository.save(user);
+
+        String token = jwtService.generateToken(user);
+
+        return new AuthResponse(token, user.getRole().getName().name());
+    }
 }

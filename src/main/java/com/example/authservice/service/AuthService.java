@@ -7,4 +7,5 @@ import com.example.authservice.dto.RegisterRequest;
 public interface AuthService {
     AuthResponse register(RegisterRequest request);
     AuthResponse login(AuthRequest request);
+    AuthResponse registerAdmin(RegisterRequest request); // For development/testing only
 }
