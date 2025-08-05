@@ -84,6 +84,12 @@ curl -X GET http://localhost:8080/api/test/admin \
 Expected Response:
 "Welcome ADMIN! This is a protected ADMIN endpoint."
 
+
+
+
+
+
+
 POSTMAN COLLECTION FORMAT
 =========================
 
@@ -140,6 +146,8 @@ Body: (none)
 
 
 
+
+
 TESTING WORKFLOW
 ================
 
@@ -166,6 +174,10 @@ Step 4: Test Role-Based Access
 - Use USER token on /api/test/admin (should get 401/403)
 - Use ADMIN token on /api/test/admin (should work)
 
+
+
+
+
 SAMPLE TEST DATA
 ===============
 
@@ -189,6 +201,11 @@ Login Credentials:
 User: testuser@example.com / userpass123
 Admin: testadmin@example.com / adminpass123
 
+
+
+
+
+
 ERROR SCENARIOS TO TEST
 ======================
 
@@ -211,6 +228,10 @@ ERROR SCENARIOS TO TEST
 5. Insufficient Role:
    - USER token accessing admin endpoint
    - Expected: 403 Forbidden
+
+
+
+   
 
 VERIFICATION CHECKLIST
 =====================
